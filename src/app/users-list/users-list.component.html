@@ -1,4 +1,18 @@
-<a routerLink="/user/add">Add User</a>
+<div class="container">
+  <div class="left-aligned">
+    <a routerLink="/user/add" mat-button color="primary">Add User</a>
+  </div>
+  <div class="left-aligned">
+    <mat-form-field appearance="fill">
+      <mat-label>Filter by username</mat-label>
+      <input #filterInput matInput (input)="applyFilter(filterInput.value)">
+    </mat-form-field>
+  </div>
+  <div class="right-aligned">
+      <button routerLink="/login" mat-button>Login</button>
+      <button (click)="logout()" mat-button>Logout</button>
+  </div>
+</div>
 
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically in the center, if needed */
+}
+
+.left-aligned {
+    display: flex;
+    gap: 100px;
+    
+}
+
+.right-aligned {
+    /* If you need any specific styling for the right-aligned column */
+}

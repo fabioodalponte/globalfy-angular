@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         response => {
-          localStorage.setItem('jwt_token', response.token);
+          console.log(response);
+          localStorage.setItem('jwt_token', response.access_token);
           console.log(response);
           this.router.navigate(['/users']);
         },
@@ -35,6 +36,10 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

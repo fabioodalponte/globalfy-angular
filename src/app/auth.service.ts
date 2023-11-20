@@ -5,6 +5,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
+  logout() {
+    console.log("eu");
+    localStorage.removeItem('jwt_token');
+  }
   private apiUrl = 'http://localhost:3000/auth/login';
   constructor(private http: HttpClient) { }
 

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { catchError, of, tap } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-users-list',
@@ -14,7 +17,9 @@ export class UsersListComponent {
   dataSource:any;
 
   constructor(private userService: UserService,
-    private router: Router,) { }
+    private router: Router,
+    private toastr: ToastrService,
+    private auth: AuthService) { }
 
   ngOnInit() {
     this.loadUsers();
@@ -30,18 +35,36 @@ export class UsersListComponent {
     this.router.navigate(['/user/edit', user.id]);
   }
 
-  deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(() => {
-      this.loadUsers();
+  deleteUser(userId: number) {
+    this.userService.deleteUser(userId).pipe(
+      tap(response => {
+        
+        this.toastr.success('User deleted successfully');
+      }),
+      catchError(error => {
+        console.log(JSON.stringify(error.status));
+        if (error.status === 401) {
+          this.toastr.error('Unauthorized: Please log in to delete users');
+        } else {
+          this.toastr.error('An error occurred');
+        }
+        return of(null); 
+      })
+    ).subscribe();
+  }
+
+  loadUsersByUsername(filter: string = '') {
+    this.userService.getUsersByUsername(filter).subscribe(users => {
+      this.dataSource = users;
     });
   }
 
-  addUser(user: User) {
-    this.userService.addUser(user).subscribe(() => {
-      this.loadUsers();
-    });
+  applyFilter(filterValue: string) {
+    console.log(filterValue);
+    this.loadUsersByUsername(filterValue);
   }
 
-  
-
+  logout() {
+    this.auth.logout();
+  }
 }
