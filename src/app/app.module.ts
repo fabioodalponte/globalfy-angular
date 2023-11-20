@@ -11,14 +11,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
-    UserEditComponent
+    UserEditComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     MatCardModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
