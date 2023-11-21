@@ -9,7 +9,7 @@ export class AuthService {
     console.log("eu");
     localStorage.removeItem('jwt_token');
   }
-  private apiUrl = 'http://localhost:3000/auth/login';
+  private apiUrl = 'http://globalfy-user.us-east-2.elasticbeanstalk.com/auth/login';
   constructor(private http: HttpClient) { }
 
   login(credentials: { username: string; password: string }) {

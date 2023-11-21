@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { throwError } from 'rxjs';
 
-import { User } from './user.model'; // Update the path as necessary
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/user';
+  private apiUrl = 'http://globalfy-user.us-east-2.elasticbeanstalk.com/user';
 
   constructor(private http: HttpClient) {}
 
